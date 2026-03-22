@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { auth } from "@/lib/auth";
 import { uploadObject, ensureBucket, BUCKET_IMAGES, buildImageUrl } from "@/lib/minio";
 import { NextRequest, NextResponse } from "next/server";

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { uploadObject, ensureBucket, BUCKET_IMAGES } from "@/lib/minio";

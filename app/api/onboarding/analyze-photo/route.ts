@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { auth } from "@/lib/auth";
 import { uploadObject, ensureBucket, BUCKET_IMAGES } from "@/lib/minio";
 import { anthropic, MODELS, parseJsonResponse } from "@/lib/claude";
