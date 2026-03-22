@@ -34,7 +34,8 @@
       "Bash(node -e \"const a = require\\(''@anthropic-ai/sdk''\\); console.log\\(a.VERSION || require\\(''@anthropic-ai/sdk/package.json''\\).version\\)\")",
       "Bash(grep '\"\"@anthropic-ai/sdk\"\"' package.json)",
       "Bash(grep -r textStream node_modules/@anthropic-ai/sdk/ --include=*.d.ts -l)",
-      "Bash(node scripts/generate-icons.mjs)"
+      "Bash(node scripts/generate-icons.mjs)",
+      "Bash(git:*)"
     ]
   }
 }

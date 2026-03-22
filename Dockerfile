@@ -53,7 +53,8 @@ COPY --from=builder /app/prisma ./prisma
 # Install Prisma CLI with all its transitive deps for running migrations.
 # Done here (as root, before USER switch) so npm can write to node_modules.
 COPY --from=builder /app/package.json ./package.json
-RUN npm install --no-save --ignore-scripts prisma
+RUN npm install --no-save --ignore-scripts prisma && \
+    chown -R nextjs:nodejs /app/node_modules
 
 # Generated Prisma client (custom output path — app/generated/prisma)
 COPY --from=builder --chown=nextjs:nodejs /app/app/generated ./app/generated
