@@ -38,8 +38,9 @@ export function ChatWindow({
     async (text: string) => {
       if (streaming) return;
 
-      const userMsg: ChatMessage = { id: crypto.randomUUID(), role: "USER", content: text };
-      const assistantMsg: ChatMessage = { id: crypto.randomUUID(), role: "ASSISTANT", content: "" };
+      const uid = () => crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      const userMsg: ChatMessage = { id: uid(), role: "USER", content: text };
+      const assistantMsg: ChatMessage = { id: uid(), role: "ASSISTANT", content: "" };
 
       setMessages((prev) => [...prev, userMsg, assistantMsg]);
       setStreaming(true);
