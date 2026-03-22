@@ -1,7 +1,7 @@
 # Wardrobe — Project State
 
 > Last updated: 2026-03-22
-> Phase completed: 5 of 6
+> Status: **MVP complete — deployed to production via Portainer**
 
 ---
 
@@ -252,13 +252,54 @@ Steps:
 - Markdown rendered on assistant messages only — user messages stay plain text
 - `anthropic.messages.stream()` returns `AsyncIterable<MessageStreamEvent>` — iterate and filter `content_block_delta` with `text_delta` (no `textStream` property in SDK 0.80)
 
-### Phase 6 — Polish & PWA Hardening
-- PWA icons (192px, 512px, maskable 512px) — need actual icon assets
-- Error boundaries, loading skeletons on all pages
-- Rate limiting on all Claude API routes
+### Phase 6 — Polish & PWA Hardening ✅ COMPLETE (2026-03-22)
+
+Completed as part of deployment testing and mobile feedback:
+
+- ✅ Rate limiting on all Claude API routes (`lib/rate-limit.ts`)
+- ✅ Error boundaries and loading skeletons on all pages
+- ✅ Mobile UI pass — FAB add buttons (wardrobe + outfits), 44px tap targets on nav
+- ✅ Warm neutral + champagne accent colour system (WCAG AA compliant)
+- ✅ Wardrobe item upload: removed `capture="environment"` so gallery/camera picker shown instead of forcing camera
+- ✅ Edit Profile — re-run onboarding wizard from profile page (`/profile/edit`)
+
+**Deferred (non-blocking for MVP):**
+- PWA icons (192px, 512px, maskable) — placeholder manifest exists, real assets not created
 - Content-Security-Policy headers
-- Mobile UI pass (44px tap targets, scroll behaviour)
-- Verify "Add to Home Screen" on iOS and Android
+- "Add to Home Screen" verification on iOS/Android
+
+---
+
+### Production Deployment
+
+Deployed via **Portainer** on a self-hosted server. Docker Compose stack: postgres + minio + minio-init + app + nginx.
+
+**Bugs found and fixed during deployment:**
+
+#### 1. Prisma engine write permission (container startup crash)
+The production stage installs `prisma` CLI as root but runs as `nextjs` user. At runtime Prisma tries to write engine binaries to `/app/node_modules/@prisma/engines` and fails.
+**Fix:** Add `chown -R nextjs:nodejs /app/node_modules` after the npm install in the production Dockerfile stage, while still running as root.
+
+#### 2. `prisma migrate deploy` — datasource URL not found
+`prisma.config.ts` (where Prisma 7 reads the DB URL) was not being copied into the production container. `migrate deploy` would error immediately.
+**Fix:** Add `COPY --from=builder /app/prisma.config.ts ./prisma.config.ts` and install `dotenv` alongside `prisma` in the production stage.
+
+#### 3. Auth.js UntrustedHost error
+The app is accessed via a LAN IP + non-standard port (`http://192.168.1.56:4221`). Auth.js rejects requests where the host isn't trusted, returning null sessions.
+**Fix:** Add `AUTH_TRUST_HOST: "true"` to the app service environment in `docker-compose.yml`.
+
+#### 4. Chat send does nothing (`crypto.randomUUID` unavailable)
+`crypto.randomUUID()` requires a secure context (HTTPS or localhost). Served over plain HTTP on a LAN IP, `crypto.randomUUID` is `undefined`. Calling it throws silently before `setMessages` runs, so nothing appears in the chat UI.
+**Fix:** Use `crypto.randomUUID?.() ?? fallback` in `chat-window.tsx`.
+
+#### 5. Auth.js JWTSessionError / Verification log noise
+Two separate issues:
+- `JWTSessionError: Invalid Compact JWE` — stale session cookies encrypted with a different `AUTH_SECRET` (e.g. from local dev). Clears itself after users re-login with the production secret.
+- `Verification: No record was found for a delete` — fired when a magic-link token is double-consumed (browser retry). Was caught with a P2025 check but Auth.js still logged it internally.
+  **Fix:** Changed `useVerificationToken` override in `lib/auth.ts` to do a `findUnique` first and return null without deleting if the token is gone — prevents the exception entirely.
+
+**Key production environment note:**
+`http://192.168.1.56:4221` → Portainer maps this directly to the Next.js app container on port 3000. nginx is in the stack but currently not in the request path for LAN access. For external/HTTPS access, nginx handles SSL termination.
 
 ---
 
