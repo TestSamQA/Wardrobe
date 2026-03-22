@@ -46,9 +46,17 @@ RUN addgroup --system --gid 1001 nodejs && \
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Prisma schema + migration files
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+
+# Prisma CLI (needed for `prisma migrate deploy` in CMD)
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+# Prisma driver adapter + migration engine (Prisma 7 — no .prisma query engine binary)
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+
+# Generated Prisma client (custom output path — app/generated/prisma)
+COPY --from=builder --chown=nextjs:nodejs /app/app/generated ./app/generated
 
 USER nextjs
 EXPOSE 3000
