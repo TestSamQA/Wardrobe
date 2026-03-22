@@ -18,6 +18,21 @@ CMD ["npm", "run", "dev"]
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Dummy env vars so Next.js can collect page data without hitting real services.
+# These are build-time only — runtime values are injected via docker-compose.
+ENV AUTH_SECRET=build-placeholder \
+    NEXTAUTH_URL=http://localhost:3000 \
+    EMAIL_SERVER=smtp://placeholder:placeholder@placeholder:587 \
+    EMAIL_FROM=placeholder@placeholder.com \
+    DATABASE_URL=postgresql://placeholder:placeholder@placeholder:5432/placeholder \
+    ANTHROPIC_API_KEY=placeholder \
+    REPLICATE_API_TOKEN=placeholder \
+    MINIO_ENDPOINT=placeholder \
+    MINIO_PORT=9000 \
+    MINIO_ACCESS_KEY=placeholder \
+    MINIO_SECRET_KEY=placeholder
+
 RUN npx prisma generate
 RUN npm run build
 
