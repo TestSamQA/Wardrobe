@@ -100,7 +100,7 @@ export function ItemUploadForm() {
         <div className="flex flex-col gap-3 w-full max-w-xs">
           <a
             href={`/wardrobe/${doneItemId}`}
-            className="w-full rounded-xl bg-neutral-50 text-neutral-950 py-3 text-sm font-semibold text-center transition hover:bg-neutral-200"
+            className="w-full rounded-xl bg-accent text-accent-fg py-3 text-sm font-semibold text-center transition hover:bg-accent-dim"
           >
             View item
           </a>
@@ -183,7 +183,7 @@ export function ItemUploadForm() {
         onClick={handleSubmit}
         disabled={!file || isProcessing}
         suppressHydrationWarning
-        className="w-full rounded-xl bg-neutral-50 text-neutral-950 py-3 text-sm font-semibold transition hover:bg-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed"
+        className="w-full rounded-xl bg-accent text-accent-fg py-3 text-sm font-semibold transition hover:bg-accent-dim disabled:opacity-40 disabled:cursor-not-allowed"
       >
         {isProcessing ? "Adding item…" : "Add to wardrobe"}
       </button>

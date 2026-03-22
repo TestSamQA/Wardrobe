@@ -120,7 +120,7 @@ export function PhotoUploadStep({ onResult, onManual }: Props) {
         onClick={handleAnalyse}
         disabled={!file || loading}
         suppressHydrationWarning
-        className="w-full rounded-xl bg-neutral-50 text-neutral-950 py-3 text-sm font-semibold transition hover:bg-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed"
+        className="w-full rounded-xl bg-accent text-accent-fg py-3 text-sm font-semibold transition hover:bg-accent-dim disabled:opacity-40 disabled:cursor-not-allowed"
       >
         {loading ? (
           <span className="flex items-center justify-center gap-2">

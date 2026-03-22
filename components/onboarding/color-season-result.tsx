@@ -85,7 +85,7 @@ export function ColorSeasonResult({ result, onConfirm, onManual }: Props) {
         <select
           value={selectedSeason}
           onChange={(e) => setSelectedSeason(e.target.value as ColorSeason)}
-          className="w-full rounded-xl bg-neutral-900 border border-neutral-800 px-4 py-3 text-sm text-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-600"
+          className="w-full rounded-xl bg-neutral-900 border border-neutral-700 px-4 py-3 text-sm text-neutral-50 focus:outline-none focus:ring-2 focus:ring-accent"
         >
           {ALL_SEASONS.map((s) => (
             <option key={s} value={s}>{COLOR_SEASONS[s].label}</option>
@@ -96,7 +96,7 @@ export function ColorSeasonResult({ result, onConfirm, onManual }: Props) {
       <button
         type="button"
         onClick={() => onConfirm(selectedSeason, result.selfieImagePath)}
-        className="w-full rounded-xl bg-neutral-50 text-neutral-950 py-3 text-sm font-semibold transition hover:bg-neutral-200"
+        className="w-full rounded-xl bg-accent text-accent-fg py-3 text-sm font-semibold transition hover:bg-accent-dim"
       >
         This is my season — continue
       </button>

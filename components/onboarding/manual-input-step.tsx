@@ -103,8 +103,8 @@ function SelectCard({
       onClick={onClick}
       className={`flex flex-col text-left rounded-xl px-4 py-3 border transition ${
         selected
-          ? "border-neutral-200 bg-neutral-800 text-neutral-50"
-          : "border-neutral-800 bg-neutral-900 text-neutral-300"
+          ? "border-accent bg-neutral-800 text-neutral-50"
+          : "border-neutral-700 bg-neutral-900 text-neutral-300"
       }`}
     >
       <span className="text-sm font-medium">{label}</span>
@@ -225,7 +225,7 @@ export function ManualInputStep({ onResult, onBack }: Props) {
         type="button"
         onClick={handleSubmit}
         disabled={!isComplete}
-        className="w-full rounded-xl bg-neutral-50 text-neutral-950 py-3 text-sm font-semibold transition hover:bg-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed"
+        className="w-full rounded-xl bg-accent text-accent-fg py-3 text-sm font-semibold transition hover:bg-accent-dim disabled:opacity-40 disabled:cursor-not-allowed"
       >
         See my season
       </button>

@@ -1,26 +1,35 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Warm neutral scale — slightly warm-tinted to avoid cold/flat feel on mobile screens.
+     All existing neutral-* classes pick these up automatically. WCAG AA compliant:
+     neutral-500 vs 950 ≈ 5:1 | neutral-400 vs 950 ≈ 7:1 | neutral-50 vs 950 ≈ 18:1 */
+  --color-neutral-50:  #F5F1EB;
+  --color-neutral-100: #E8E3DC;
+  --color-neutral-200: #D2CCC3;
+  --color-neutral-300: #BDB7AE;
+  --color-neutral-400: #A09890;
+  --color-neutral-500: #837D74;
+  --color-neutral-600: #524F47;
+  --color-neutral-700: #343129;
+  --color-neutral-800: #262320;
+  --color-neutral-900: #1A1916;
+  --color-neutral-950: #0F0E0B;
+
+  /* Champagne gold accent — used for all primary interactive elements.
+     Contrast on neutral-950 ≈ 8:1 (WCAG AA) | accent-fg on accent ≈ 9:1 */
+  --color-accent:     #C9A96E;
+  --color-accent-dim: #B08E55;
+  --color-accent-fg:  #1C1A17;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0F0E0B;
+  color: #F5F1EB;
+  font-family: var(--font-geist-sans, system-ui, sans-serif);
 }

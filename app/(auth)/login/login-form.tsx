@@ -50,7 +50,7 @@ export function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
-          className="w-full rounded-xl bg-neutral-900 border border-neutral-800 px-4 py-3 text-sm text-neutral-50 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-transparent transition"
+          className="w-full rounded-xl bg-neutral-900 border border-neutral-700 px-4 py-3 text-sm text-neutral-50 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition"
         />
       </div>
 
@@ -59,7 +59,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={loading || !email}
-        className="w-full rounded-xl bg-neutral-50 text-neutral-950 py-3 text-sm font-semibold transition hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full rounded-xl bg-accent text-accent-fg py-3 text-sm font-semibold transition hover:bg-accent-dim disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {loading ? "Sending..." : "Send magic link"}
       </button>

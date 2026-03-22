@@ -19,17 +19,17 @@ declare module "next-auth" {
 const adapter = {
   ...PrismaAdapter(prisma),
   // @auth/prisma-adapter uses delete() which throws P2025 if the token was
-  // already consumed (e.g. double-click, browser retry). Override to swallow
-  // that specific error and return null so Auth.js handles it gracefully.
+  // already consumed (e.g. double-click, browser retry). Look up first so we
+  // never throw — avoids the Auth.js internal Verification error log.
   async useVerificationToken(params: { identifier: string; token: string }) {
-    try {
-      return await prisma.verificationToken.delete({
-        where: { identifier_token: { identifier: params.identifier, token: params.token } },
-      });
-    } catch (e: unknown) {
-      if ((e as { code?: string }).code === "P2025") return null;
-      throw e;
-    }
+    const token = await prisma.verificationToken.findUnique({
+      where: { identifier_token: { identifier: params.identifier, token: params.token } },
+    });
+    if (!token) return null;
+    await prisma.verificationToken.delete({
+      where: { identifier_token: { identifier: params.identifier, token: params.token } },
+    });
+    return token;
   },
 };
 

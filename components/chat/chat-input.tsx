@@ -32,7 +32,7 @@ export function ChatInput({
         rows={1}
         placeholder={placeholder}
         disabled={disabled}
-        className="flex-1 resize-none bg-neutral-900 text-neutral-100 placeholder-neutral-500 rounded-xl px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-neutral-600 disabled:opacity-50 overflow-hidden"
+        className="flex-1 resize-none bg-neutral-900 text-neutral-100 placeholder-neutral-500 rounded-xl px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-accent disabled:opacity-50 overflow-hidden"
         style={{ maxHeight: "120px" }}
         onKeyDown={(e) => {
           if (e.key === "Enter" && !e.shiftKey) {
@@ -49,7 +49,7 @@ export function ChatInput({
       <button
         onClick={submit}
         disabled={disabled}
-        className="shrink-0 w-9 h-9 rounded-xl bg-neutral-100 text-neutral-900 flex items-center justify-center disabled:opacity-40 active:scale-95 transition-transform"
+        className="shrink-0 w-9 h-9 rounded-xl bg-accent text-accent-fg flex items-center justify-center disabled:opacity-40 active:scale-95 transition-transform"
         aria-label="Send"
       >
         <svg

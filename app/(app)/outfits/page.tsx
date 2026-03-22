@@ -24,21 +24,17 @@ export default async function OutfitsPage() {
 
   return (
     <div>
-      <TopBar
-        title="Outfits"
-        action={
-          <Link
-            href="/outfits/create"
-            aria-label="Create outfit"
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-neutral-800 hover:bg-neutral-700 transition"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-          </Link>
-        }
-      />
+      <TopBar title="Outfits" />
       <OutfitGrid outfits={outfits} />
+      <Link
+        href="/outfits/create"
+        aria-label="Create outfit"
+        className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full bg-accent text-accent-fg flex items-center justify-center shadow-lg active:scale-95 transition-transform"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+        </svg>
+      </Link>
     </div>
   );
 }

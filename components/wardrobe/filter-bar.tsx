@@ -42,7 +42,7 @@ export function FilterBar({ activeCategory }: Props) {
           onClick={() => setCategory(cat.value)}
           className={`flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-medium transition ${
             activeCategory === cat.value
-              ? "bg-neutral-50 text-neutral-950"
+              ? "bg-accent text-accent-fg"
               : "bg-neutral-900 text-neutral-400 hover:text-neutral-200"
           }`}
         >

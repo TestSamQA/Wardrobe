@@ -28,8 +28,8 @@ export function StylePicker({ onSelect, loading }: Props) {
             onClick={() => setSelected(archetype.id)}
             className={`flex flex-col gap-1 text-left rounded-2xl border px-4 py-4 transition ${
               selected === archetype.id
-                ? "border-neutral-200 bg-neutral-800"
-                : "border-neutral-800 bg-neutral-900"
+                ? "border-accent bg-neutral-800"
+                : "border-neutral-700 bg-neutral-900"
             }`}
           >
             <span className="text-2xl">{archetype.emoji}</span>
@@ -43,7 +43,7 @@ export function StylePicker({ onSelect, loading }: Props) {
         type="button"
         onClick={() => selected && onSelect(selected)}
         disabled={!selected || loading}
-        className="w-full rounded-xl bg-neutral-50 text-neutral-950 py-3 text-sm font-semibold transition hover:bg-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed"
+        className="w-full rounded-xl bg-accent text-accent-fg py-3 text-sm font-semibold transition hover:bg-accent-dim disabled:opacity-40 disabled:cursor-not-allowed"
       >
         {loading ? (
           <span className="flex items-center justify-center gap-2">

@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { TopBar } from "@/components/layout/top-bar";
 import { COLOR_SEASONS, STYLE_ARCHETYPES } from "@/lib/color-seasons";
 import type { ColorSeason } from "@/app/generated/prisma/client";
@@ -32,7 +33,17 @@ export default async function ProfilePage() {
 
   return (
     <div>
-      <TopBar title="Profile" />
+      <TopBar
+        title="Profile"
+        action={
+          <Link
+            href="/profile/edit"
+            className="text-xs font-medium text-accent hover:text-accent-dim transition px-1 py-1"
+          >
+            Edit
+          </Link>
+        }
+      />
       <div className="px-4 py-6 flex flex-col gap-5 max-w-lg mx-auto">
 
         {/* Colour season card */}

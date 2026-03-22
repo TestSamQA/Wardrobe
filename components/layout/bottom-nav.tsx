@@ -58,7 +58,7 @@ export function BottomNav() {
               key={item.href}
               href={item.href}
               className={`flex flex-1 flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors min-h-[44px] ${
-                active ? "text-neutral-50" : "text-neutral-500 hover:text-neutral-300"
+                active ? "text-accent" : "text-neutral-500 hover:text-neutral-300"
               }`}
             >
               {item.icon(active)}
