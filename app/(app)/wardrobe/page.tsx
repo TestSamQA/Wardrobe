@@ -41,25 +41,22 @@ export default async function WardrobePage({
 
   return (
     <div>
-      <TopBar
-        title="Wardrobe"
-        action={
-          <Link
-            href="/wardrobe/add"
-            aria-label="Add item"
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-neutral-800 hover:bg-neutral-700 transition"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-          </Link>
-        }
-      />
+      <TopBar title="Wardrobe" />
       {/* FilterBar uses useSearchParams — requires Suspense boundary */}
       <Suspense fallback={<div className="h-12" />}>
         <FilterBar activeCategory={activeCategory} />
       </Suspense>
       <ItemGrid items={items} />
+      {/* FAB — sits above the bottom nav (h-16 = 64px) with extra breathing room */}
+      <Link
+        href="/wardrobe/add"
+        aria-label="Add item"
+        className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full bg-neutral-50 text-neutral-950 flex items-center justify-center shadow-lg active:scale-95 transition-transform"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+        </svg>
+      </Link>
     </div>
   );
 }
