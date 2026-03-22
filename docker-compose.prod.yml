@@ -95,7 +95,8 @@ services:
       MINIO_BUCKET_IMAGES: wardrobe-images
       MINIO_BUCKET_THUMBNAILS: wardrobe-thumbnails
       MINIO_PUBLIC_BASE_URL: /api/images
-      NEXT_PUBLIC_APP_URL: ${NEXTAUTH_URL}
+      NEXT_PUBLIC_APP_URL: ${NEXTAUTH_URL}      
+      AUTH_TRUST_HOST: "true"
     networks:
       - internal
 
