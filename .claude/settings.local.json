@@ -35,7 +35,8 @@
       "Bash(grep '\"\"@anthropic-ai/sdk\"\"' package.json)",
       "Bash(grep -r textStream node_modules/@anthropic-ai/sdk/ --include=*.d.ts -l)",
       "Bash(node scripts/generate-icons.mjs)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(ls -la \"C:\\\\Repos\\\\Vibing\\\\Wardrobe\\\\app\\\\\\(app\\)\")"
     ]
   }
 }

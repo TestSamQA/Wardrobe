@@ -167,6 +167,13 @@ function buildSystemPrompt(styleProfile: StyleProfile, wardrobeItems: WardrobeIt
     }
   }
 
+  if (styleProfile) {
+    const brands = (styleProfile.preferredBrands as string[] | null) ?? [];
+    if (brands.length > 0) {
+      prompt += `\n\nFavourite shops & brands: ${brands.join(", ")}. When suggesting purchases or new pieces, prioritise these retailers where possible.`;
+    }
+  }
+
   prompt +=
     "\n\nAlways reference the user's actual items and colour profile when relevant. Be concise and specific.";
 

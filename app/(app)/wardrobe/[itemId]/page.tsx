@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { TopBar } from "@/components/layout/top-bar";
 import { ItemDetailActions } from "@/components/wardrobe/item-detail-actions";
+import { ItemEditForm } from "@/components/wardrobe/item-edit-form";
 import { buildImageUrl, BUCKET_IMAGES } from "@/lib/minio";
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -140,7 +141,17 @@ export default async function ItemDetailPage({
           </svg>
         </Link>
 
-        {/* Edit notes + delete (client) */}
+        {/* Edit item details (client) */}
+        <ItemEditForm
+          itemId={item.id}
+          initialCustomName={item.customName}
+          aiName={item.name}
+          initialNotes={item.notes}
+          initialColors={colors}
+          initialColorHexes={colorHexes}
+        />
+
+        {/* Personal notes + delete (client) */}
         <ItemDetailActions itemId={item.id} initialUserNotes={item.userNotes} />
 
       </div>

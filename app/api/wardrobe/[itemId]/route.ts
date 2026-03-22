@@ -26,8 +26,11 @@ const PatchSchema = z.object({
   customName: z.string().max(100).nullable().optional(),
   userNotes: z.string().max(1000).nullable().optional(),
   name: z.string().max(100).optional(),
+  notes: z.string().max(2000).nullable().optional(),
   formality: z.enum(["CASUAL", "SMART_CASUAL", "BUSINESS_CASUAL", "FORMAL", "ATHLETIC"]).optional(),
   seasons: z.array(z.enum(["Spring", "Summer", "Autumn", "Winter"])).optional(),
+  colors: z.array(z.string().max(50)).max(8).optional(),
+  colorHexes: z.array(z.string().regex(/^#[0-9A-Fa-f]{6}$/)).max(8).optional(),
 });
 
 // PATCH /api/wardrobe/[itemId]

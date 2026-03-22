@@ -5,6 +5,7 @@ import Link from "next/link";
 import { TopBar } from "@/components/layout/top-bar";
 import { COLOR_SEASONS, STYLE_ARCHETYPES } from "@/lib/color-seasons";
 import type { ColorSeason } from "@/app/generated/prisma/client";
+import { BrandsEditor } from "@/components/profile/brands-editor";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -30,6 +31,7 @@ export default async function ProfilePage() {
   const powerColors = profile.powerColors as string[];
   const neutralColors = profile.neutralColors as string[];
   const colorsToAvoid = profile.colorsToAvoid as string[];
+  const preferredBrands = (profile.preferredBrands as string[] | null) ?? [];
 
   return (
     <div>
@@ -104,6 +106,9 @@ export default async function ProfilePage() {
             ))}
           </div>
         </div>
+
+        {/* Favourite brands */}
+        <BrandsEditor initialBrands={preferredBrands} />
 
         <p className="text-xs text-neutral-600 text-center pb-2">
           Analysed via {profile.analysisMethod === "PHOTO" ? "photo" : "manual input"} ·{" "}

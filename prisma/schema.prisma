@@ -89,6 +89,8 @@ model StyleProfile {
   neutralColors Json
   colorsToAvoid Json
 
+  preferredBrands Json?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

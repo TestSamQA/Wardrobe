@@ -168,6 +168,13 @@ Colours: ${colors}`;
     }
   }
 
+  if (styleProfile) {
+    const brands = (styleProfile.preferredBrands as string[] | null) ?? [];
+    if (brands.length > 0) {
+      prompt += `\n\nFavourite shops & brands: ${brands.join(", ")}. When suggesting complementary pieces or purchases, prioritise these retailers where possible.`;
+    }
+  }
+
   prompt +=
     "\n\nGive specific, practical advice about this item — how to style it, what it pairs with, whether it suits their colour profile, occasions to wear it, etc. Be conversational and helpful.";
 
