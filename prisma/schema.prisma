@@ -1,0 +1,241 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+// ─── Auth.js required tables ─────────────────────────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─── Core App Tables ──────────────────────────────────────────────────────────
+
+model User {
+  id               String           @id @default(cuid())
+  email            String           @unique
+  emailVerified    DateTime?
+  name             String?
+  image            String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  onboardingStatus OnboardingStatus @default(PENDING)
+
+  accounts      Account[]
+  sessions      Session[]
+  styleProfile  StyleProfile?
+  wardrobeItems WardrobeItem[]
+  outfits       Outfit[]
+  chatSessions  ChatSession[]
+}
+
+enum OnboardingStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETE
+}
+
+model StyleProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  colorSeason     ColorSeason
+  analysisMethod  AnalysisMethod
+  selfieImagePath String?
+  skinTone        String?
+  hairColor       String?
+  eyeColor        String?
+  seasonNotes     String?        @db.Text
+
+  styleArchetype String
+  styleNotes     String? @db.Text
+
+  powerColors   Json
+  neutralColors Json
+  colorsToAvoid Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ColorSeason {
+  LIGHT_SPRING
+  LIGHT_SUMMER
+  CLEAR_SPRING
+  CLEAR_WINTER
+  WARM_SPRING
+  WARM_AUTUMN
+  DEEP_AUTUMN
+  DEEP_WINTER
+  SOFT_SUMMER
+  SOFT_AUTUMN
+  TRUE_SPRING
+  TRUE_SUMMER
+  TRUE_AUTUMN
+  TRUE_WINTER
+}
+
+enum AnalysisMethod {
+  PHOTO
+  MANUAL
+}
+
+model WardrobeItem {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  imagePath     String
+  thumbnailPath String?
+
+  name        String
+  category    ItemCategory
+  subcategory String?
+  colors      Json
+  colorHexes  Json
+  pattern     String?
+  material    String?
+  formality   Formality
+  seasons     Json
+  brand       String?
+  notes       String?      @db.Text
+
+  customName String?
+  userNotes  String? @db.Text
+
+  archivedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  outfitItems  OutfitItem[]
+  chatSessions ChatSession[]
+
+  @@index([userId, category])
+  @@index([userId, archivedAt])
+}
+
+enum ItemCategory {
+  HEADWEAR
+  OUTERWEAR
+  TOPS
+  BOTTOMS
+  FOOTWEAR
+  ACCESSORIES
+  BAGS
+  FULL_OUTFIT
+}
+
+enum Formality {
+  CASUAL
+  SMART_CASUAL
+  BUSINESS_CASUAL
+  FORMAL
+  ATHLETIC
+}
+
+model Outfit {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name             String
+  description      String?              @db.Text
+  aiRationale      String?              @db.Text
+  occasion         String?
+  season           String?
+  flatlayImagePath String?
+  createdBy        OutfitCreationMethod @default(MANUAL)
+  aiPrompt         String?              @db.Text
+
+  archivedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  items OutfitItem[]
+}
+
+enum OutfitCreationMethod {
+  MANUAL
+  AI_GENERATED
+}
+
+model OutfitItem {
+  id             String       @id @default(cuid())
+  outfitId       String
+  outfit         Outfit       @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  wardrobeItemId String
+  wardrobeItem   WardrobeItem @relation(fields: [wardrobeItemId], references: [id], onDelete: Cascade)
+  position       Int
+
+  @@unique([outfitId, wardrobeItemId])
+  @@index([outfitId])
+}
+
+model ChatSession {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  wardrobeItemId String?
+  wardrobeItem   WardrobeItem? @relation(fields: [wardrobeItemId], references: [id], onDelete: SetNull)
+
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  messages ChatMessage[]
+
+  @@index([userId, wardrobeItemId])
+}
+
+model ChatMessage {
+  id        String      @id @default(cuid())
+  sessionId String
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  role      MessageRole
+  content   String      @db.Text
+  createdAt DateTime    @default(now())
+
+  @@index([sessionId, createdAt])
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+}

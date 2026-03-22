@@ -1,0 +1,25 @@
+# Dev overrides — applied automatically when running docker compose without -f
+# Exposes postgres and minio directly for local tooling access
+
+services:
+  app:
+    build:
+      target: development
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      NODE_ENV: development
+    command: npm run dev
+    ports:
+      - "3000:3000"
+
+  postgres:
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  minio:
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"

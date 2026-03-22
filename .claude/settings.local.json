@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npx --version)",
+      "Bash(docker --version)",
+      "Bash(docker compose:*)",
+      "Bash(npx:*)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Users/antic/AppData/Roaming/**)",
+      "Read(//c//**)",
+      "Bash(export PATH=\"$PATH:/c/Program Files/nodejs\")",
+      "Bash(cp -r /c/Repos/Vibing/Wardrobe/wardrobe-temp/. /c/Repos/Vibing/Wardrobe/)",
+      "Bash(rm -rf /c/Repos/Vibing/Wardrobe/wardrobe-temp)",
+      "Bash(npm install:*)",
+      "Bash(mkdir -p /c/Repos/Vibing/Wardrobe/app/\\\\\\(auth\\\\\\)/login /c/Repos/Vibing/Wardrobe/app/\\\\\\(auth\\\\\\)/verify /c/Repos/Vibing/Wardrobe/app/\\\\\\(app\\\\\\)/onboarding/photo /c/Repos/Vibing/Wardrobe/app/\\\\\\(app\\\\\\)/onboarding/manual /c/Repos/Vibing/Wardrobe/app/\\\\\\(app\\\\\\)/onboarding/style /c/Repos/Vibing/Wardrobe/app/\\\\\\(app\\\\\\)/wardrobe /c/Repos/Vibing/Wardrobe/app/\\\\\\(app\\\\\\)/outfits /c/Repos/Vibing/Wardrobe/app/\\\\\\(app\\\\\\)/chat /c/Repos/Vibing/Wardrobe/app/\\\\\\(app\\\\\\)/profile)",
+      "Bash(mkdir -p /c/Repos/Vibing/Wardrobe/app/api/auth/[...nextauth] /c/Repos/Vibing/Wardrobe/app/api/upload /c/Repos/Vibing/Wardrobe/app/api/images/[...path] /c/Repos/Vibing/Wardrobe/app/api/onboarding/analyze-photo /c/Repos/Vibing/Wardrobe/app/api/onboarding/complete)",
+      "Bash(mkdir -p /c/Repos/Vibing/Wardrobe/components/ui /c/Repos/Vibing/Wardrobe/components/layout /c/Repos/Vibing/Wardrobe/components/onboarding /c/Repos/Vibing/Wardrobe/components/wardrobe /c/Repos/Vibing/Wardrobe/components/chat)",
+      "Bash(mkdir -p /c/Repos/Vibing/Wardrobe/lib/validations /c/Repos/Vibing/Wardrobe/hooks /c/Repos/Vibing/Wardrobe/types /c/Repos/Vibing/Wardrobe/nginx)",
+      "Bash(npm run:*)",
+      "Bash(npm list:*)",
+      "Bash(node -e \":*)",
+      "Bash(node -e \"const p = require\\(''./node_modules/next/package.json''\\); console.log\\(p.version\\);\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/next-auth/package.json''\\); console.log\\(p.version\\);\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/@auth/core/package.json''\\); console.log\\(''auth/core:'', p.version\\);\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/api/auth/providers)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/api/auth/session)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/api/auth/csrf)",
+      "Bash(find:*)",
+      "Bash(export 'PATH=$PATH:/c/Program Files/nodejs')",
+      "Bash(curl -s http://localhost:3000/api/auth/session -w '\\\\nHTTP %{http_code}')",
+      "Bash(curl -s http://localhost:3000/api/upload -w '\\\\nHTTP %{http_code}')",
+      "Bash(node -e \"const p = require\\(''./node_modules/next-auth/package.json''\\); console.log\\(''peerDeps:'', JSON.stringify\\(p.peerDependencies, null, 2\\)\\);\")",
+      "Bash(node -e \"const a = require\\(''@anthropic-ai/sdk''\\); console.log\\(a.VERSION || require\\(''@anthropic-ai/sdk/package.json''\\).version\\)\")",
+      "Bash(grep '\"\"@anthropic-ai/sdk\"\"' package.json)",
+      "Bash(grep -r textStream node_modules/@anthropic-ai/sdk/ --include=*.d.ts -l)",
+      "Bash(node scripts/generate-icons.mjs)"
+    ]
+  }
+}
