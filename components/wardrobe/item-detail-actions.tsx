@@ -11,8 +11,22 @@ export function ItemDetailActions({ itemId, initialUserNotes }: Props) {
   const [notes, setNotes] = useState(initialUserNotes ?? "");
   const [notesSaving, setNotesSaving] = useState(false);
   const [notesSaved, setNotesSaved] = useState(false);
+  const [duplicating, setDuplicating] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+  async function duplicateItem() {
+    setDuplicating(true);
+    try {
+      const res = await fetch(`/api/wardrobe/${itemId}/duplicate`, { method: "POST" });
+      if (res.ok) {
+        const { id } = await res.json();
+        window.location.href = `/wardrobe/${id}`;
+      }
+    } finally {
+      setDuplicating(false);
+    }
+  }
 
   async function saveNotes() {
     setNotesSaving(true);
@@ -64,6 +78,16 @@ export function ItemDetailActions({ itemId, initialUserNotes }: Props) {
           {notesSaving ? "Saving…" : notesSaved ? "Saved ✓" : "Save notes"}
         </button>
       </div>
+
+      {/* Duplicate */}
+      <button
+        type="button"
+        onClick={duplicateItem}
+        disabled={duplicating}
+        className="text-sm text-neutral-400 underline text-left disabled:opacity-50"
+      >
+        {duplicating ? "Duplicating…" : "Duplicate in another colour"}
+      </button>
 
       {/* Delete */}
       {!showDeleteConfirm ? (
